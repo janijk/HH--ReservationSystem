@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface EventRepository extends CrudRepository<Event, Long> {
-	List<Event> findByName(String name);
-	
+public interface UserRepository extends CrudRepository<User, Long> {
+	List<User> findByUsername(String username);
 
 }
