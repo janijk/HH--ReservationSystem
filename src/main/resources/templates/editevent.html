@@ -13,7 +13,7 @@
 	</div>
 	<div class="container">
 		<div style="width: 40%;">
-			<form th:object="${event}" th:action="@{../create}" action="#" method="post">
+			<form th:object="${event}" th:action="@{../edit}" action="#" method="post">
 			
 				<label for="id"></label>
 				<input type="hidden" id="id" th:field="*{eventId}" readonly="readonly"  />
@@ -21,6 +21,7 @@
 			  <div class="form-group">
 			    <label for="input1" th:text="Name"></label>
 			    <input type="text" class="form-control" id="input1" th:field="*{name}">
+			     <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</span>
 			  </div>
 			  	  
 			  <div class="form-group">
@@ -33,25 +34,30 @@
 			  <div class="form-group">
 			    <label for="input3" th:text="Date" ></label>
 			    <input type="text" class="form-control" id="iInput3" th:field="*{date}" placeholder="01.01.2022">
+			    <span class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">error</span>
 			  </div>	   
 			  <div class="form-group">
 			    <label for="input4" th:text="Duration"></label>
 			    <input type="text" class="form-control" id="input4" th:field="*{duration}" placeholder="days">
+			    <span class="text-danger" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}">error</span>
 			  </div>
 			  
 			  <div class="form-group">
 			    <label for="input5" th:text="Price"></label>
 			    <input type="text" class="form-control" id="input5" th:field="*{price}">
+			    <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">error</span>
 			  </div>
 			  
 			   <div class="form-group">
 			    <label for="input6" th:text="Capacity"></label>
 			    <input class="form-control" id="input6" th:field="*{capacity}" >
+			    <span class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">error</span>
 			  </div>
 			  
 			  <div class="form-group">
 			    <label for="textarea1" th:text="Description"></label>
 			    <textarea class="form-control" id="textarea1" th:field="*{description}" rows="3"></textarea>
+			    <span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">error</span>
 			  </div>
 			  
 			  <div style="clear: both; display: block; height: 10px;"></div>							  

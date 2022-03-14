@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Venue {
 	@Id
@@ -17,6 +19,7 @@ public class Venue {
 	private String name,location;
 	private int capacity;	
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy ="venue")
 	private List<Event> events;
 	

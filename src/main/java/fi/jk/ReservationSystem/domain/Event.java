@@ -10,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Event {
@@ -17,14 +23,31 @@ public class Event {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long eventId;
 	
-	private String name,date,description;
+	@Size(min=2, max=30, message="Name length must be between 2 and 30 characters")
+	private String name;
+		
+	@Pattern(regexp ="^[0-9]{1,2}[.]{1}[0-9]{1,2}[.]{1}[0-9]{4}", message="Give date in form days.months.years")
+	private String date;
+	
+	@Size(max=100, message="Descriptions max length is 100 characters")
+	private String description;
+	
+	@NotNull(message="Price cant be empty, if event is free of charge, type 0")
 	private Double price;
-	private int duration,capacity;
+	
+	@NotNull(message="Duration cant be empty")
+	@Min(value=1, message="Duration has to be at least 1")
+	private int duration;
+	
+	@NotNull
+	@Min(value=1, message="Capacity has to be at least 1")
+	private int capacity;
 	
 	@ManyToOne
 	@JoinColumn(name="venueId")
 	private Venue venue;
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy ="event")
 	private List<Reservation> reservations;
 	
@@ -131,6 +154,7 @@ public class Event {
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-	
+
+		
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 	<title> Events </title>
@@ -11,27 +11,38 @@
 <body class="bg-dark text-white">
 	<div class="container">
 		<h1>Events
-		<a href="/addevent" class="btn btn-outline-success" >Add event</a>
+		<a href="/addevent" class="btn btn-outline-success" sec:authorize="hasAuthority('ADMIN')" >Add event</a>
 		<a href="/reservations" class="btn btn-outline-primary" >My events</a>
 		</h1>
+		
+		<form th:action="@{/logout}" method="post">
+		<h5 th:inline="text">Logged in as [[${#httpServletRequest.remoteUser}]]  
+		<input type="submit" value="Sign Out" class="btn btn-outline-danger"/>
+		</h5>		 
+		</form>		
+		
 	</div>
 	
 	<div th:each = "Event : ${events}" class="container">
 		<div style="width: 50%;">	
 			<h3 th:text="${Event.name}"></h3>
-			<a class="btn btn-outline-primary">Book</a>
-			<a th:href="@{/editevent/{id}(id=${Event.eventId})}" class="btn btn-outline-secondary">Edit</a>
-			<a th:href="@{/delete/{id}(id=${Event.eventId})}" class="btn btn-outline-danger" >Delete</a>
+			<a th:href="@{/book/{id}(id=${Event.eventId})}" class="btn btn-outline-primary">Book</a>
+			<a th:href="@{/editevent/{id}(id=${Event.eventId})}" sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary">Edit</a>
+			<a th:href="@{/delete/{id}(id=${Event.eventId})}" sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-danger" >Delete</a>
 			<div style="padding:5px 0"></div>
 			
-			<table class="table table-striped table-dark table-sm" >			
+			<table class="table table-striped table-dark table-sm" >
+				<tr >
+					<th scope="row" th:text="Duration"></th>
+					<td th:text="${Event.date}"></td>					
+				</tr>			
 				<tr >
 					<th scope="row" th:text="Duration"></th>
 					<td th:text="${Event.duration}+' days'"></td>					
 				</tr>
 				<tr >
 					<th scope="row" th:text="Price"></th>
-					<td th:text="${Event.price}+'€'"></td>					
+					<td th:text="${Event.price}+' €'"></td>					
 				</tr>
 				<tr >
 					<th scope="row" th:text="Venue"></th>

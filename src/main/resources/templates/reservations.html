@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 	<title> Reservations </title>
@@ -10,7 +10,8 @@
 
 <body class="bg-dark text-white">
 	<div class="container">
-		<h1>My reservations</h1>
+	<h1>My reservations</h1>
+	<h5 th:inline="text">Logged in as [[${#httpServletRequest.remoteUser}]]</h5>		
 	</div>
 	
 	<div th:each = "Res : ${reservations}" class="container">
@@ -19,7 +20,7 @@
 				<tr >
 					<td style="width: 550px;" th:text="${Res.event.name}" ></td>
 					<td>
-					<a  class="btn btn-outline-danger" >Cancel</a>
+					<a th:href="@{/remove/{id}(id=${Res.reservationId})}"  class="btn btn-outline-danger" >Cancel</a>
 					</td>										
 				</tr>
 				
