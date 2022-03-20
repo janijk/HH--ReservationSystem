@@ -34,12 +34,10 @@ public class Event {
 	
 	@NotNull(message="Price cant be empty, if event is free of charge, type 0")
 	private Double price;
-	
-	@NotNull(message="Duration cant be empty")
+		
 	@Min(value=1, message="Duration has to be at least 1")
 	private int duration;
-	
-	@NotNull
+		
 	@Min(value=1, message="Capacity has to be at least 1")
 	private int capacity;
 	

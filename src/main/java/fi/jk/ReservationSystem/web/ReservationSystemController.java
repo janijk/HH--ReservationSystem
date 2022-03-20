@@ -1,5 +1,7 @@
 package fi.jk.ReservationSystem.web;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fi.jk.ReservationSystem.domain.Event;
 import fi.jk.ReservationSystem.domain.EventRepository;
+import fi.jk.ReservationSystem.domain.Reservation;
 import fi.jk.ReservationSystem.domain.ReservationRepository;
 import fi.jk.ReservationSystem.domain.UserRepository;
-import fi.jk.ReservationSystem.domain.Venue;
 import fi.jk.ReservationSystem.domain.VenueRepository;
 
 @Controller
@@ -30,6 +31,12 @@ public class ReservationSystemController {
 	@Autowired
 	private UserRepository uRepository;
 	
+	// Login page
+	@GetMapping("/login")
+	public String logIn() {
+		return "login";
+	}
+	
 	// List events
 	@GetMapping(value="/events")
 	public String showEvents(Model model) {
@@ -39,9 +46,16 @@ public class ReservationSystemController {
 	
 	// Show users reservations
 	@GetMapping("/reservations")
-	public String showReservations(Model model) {
-		model.addAttribute("reservations", rRepository.findAll());
+	public String showReservations(Model model, Principal princip) {
+		model.addAttribute("reservations", rRepository.findByUser(uRepository.findByUsername(princip.getName())));
 		return "reservations";
+	}
+	
+	// Show single event from own reservations
+	@GetMapping("/inspect/{id}")
+	public String inspectEvent(@PathVariable("id")Long eventId, Model model) {
+		model.addAttribute("singleevent", eRepository.findById(eventId).get());
+		return "inspect";
 	}
 	
 	// Create new event
@@ -58,7 +72,6 @@ public class ReservationSystemController {
 	@GetMapping("/editevent/{id}")
 	public String editEvent(@PathVariable("id")Long eventsId, Model model) {
 		model.addAttribute("event", eRepository.findById(eventsId));
-		model.addAttribute("venue", vRepository.findAll());
 		return "editevent";
 	}
 	
@@ -89,11 +102,17 @@ public class ReservationSystemController {
 		}
 	
 	// Make reservation
-	@PostMapping("/book/{id}/{idtwo}")
-	public String bookEvent(@PathVariable("id") Long eventId,@PathVariable("idtwo") Long userId,Model model) {
-		model.addAttribute("event", eRepository.findById(eventId));
-		model.addAttribute("user", uRepository.findById(userId));
-		return "reservations";
+	@GetMapping("/book/{id}")
+	public String bookEvent(@PathVariable("id") Long eventId, Principal principal) {
+		if(eRepository.findById(eventId).get().getReservations().size()>=eRepository.findById(eventId).get().getCapacity()) {
+			return "redirect:../events";
+		}else {
+		Reservation res = new Reservation();
+		res.setEvent(eRepository.findById(eventId).get());
+		res.setUser(uRepository.findByUsername(principal.getName()));
+		rRepository.save(res);
+		return "redirect:../reservations";
+		}
 	}
 	
 	// Delete event

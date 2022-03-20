@@ -29,6 +29,7 @@ public class WebSecuritySettings extends WebSecurityConfigurerAdapter {
 	          .anyRequest().authenticated()
 	          .and()
 	      .formLogin()
+	      	.loginPage("/login")
 	          .defaultSuccessUrl("/events", true)
 	          .permitAll()
 	          .and()

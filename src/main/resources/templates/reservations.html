@@ -10,21 +10,29 @@
 
 <body class="bg-dark text-white">
 	<div class="container">
-	<h1>My reservations</h1>
-	<h5 th:inline="text">Logged in as [[${#httpServletRequest.remoteUser}]]</h5>		
+		<h1>My reservations
+			<a href="/events" class="btn btn-outline-primary" >All events</a>
+		</h1>
+		<div sec:authorize="isAuthenticated()">Logged in as
+			<span sec:authentication="name"></span>
+		</div>
+		<div style="padding:5px 0"></div>
+		<h3 th:if="${#strings.toString(reservations) == '[]'}">No reservations</h3>		
 	</div>
 	
-	<div th:each = "Res : ${reservations}" class="container">
+	<div th:each = "Res : ${reservations}" class="container">		
 		<div style="width: 50%;">				
-			<table class="table table-striped table-dark" >			
+			<table class="table table-striped table-dark" >		
 				<tr >
 					<td style="width: 550px;" th:text="${Res.event.name}" ></td>
 					<td>
-					<a th:href="@{/remove/{id}(id=${Res.reservationId})}"  class="btn btn-outline-danger" >Cancel</a>
+						<a th:href="@{/inspect/{id}(id=${Res.event.eventId})}"  class="btn btn-outline-primary" >Show</a>
 					</td>										
+					<td>										
+						<a th:href="@{/remove/{id}(id=${Res.reservationId})}"  class="btn btn-outline-danger" >Cancel</a>
+					</td>															
 				</tr>
-				
-			</table>
+			</table>			
 		</div>
 	</div>	
 

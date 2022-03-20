@@ -30,13 +30,14 @@ public class ReservationSystemApplication {
 			urep.save(new User("jaka","$2a$10$klZ/y6S06WmQZQwPVCeFceva6s5xc71f1/.vLzj/ByasI5cXC89Sy","ADMIN","jani","karvo","jk@jk.com"));
 			urep.save(new User("user","$2a$10$klZ/y6S06WmQZQwPVCeFceva6s5xc71f1/.vLzj/ByasI5cXC89Sy","USER","mika","karvo","mk@mk.com"));
 			
-			erep.save(new Event("Venemessut","12.12.2022","bulit messut stadikal",100.00,4,120,vrep.findByName("Stadikka").get(0)));
+			erep.save(new Event("Venemessut","12.12.2022","bulit messut stadikal",100.00,4,2,vrep.findByName("Stadikka").get(0)));
 			erep.save(new Event("E-sport kisa","1.1.2022","MM-kisat",100.00,4,120,vrep.findByName("Stadikka").get(0)));
 			erep.save(new Event("Olympialaiset","8.9.2030","Suomen jotkut olympialaiset sitten näin monen vuoden jne ja tulee uskomaton meininki"
 									,500.00,30,400,vrep.findByName("Stadikka").get(0)));
 			
 			rrep.save(new Reservation(erep.findByName("Venemessut").get(0),urep.findListByUsername("jaka").get(0)));
 			rrep.save(new Reservation(erep.findByName("E-sport kisa").get(0),urep.findListByUsername("jaka").get(0)));
+			rrep.save(new Reservation(erep.findByName("E-sport kisa").get(0),urep.findListByUsername("user").get(0)));
 								
 			
 		};

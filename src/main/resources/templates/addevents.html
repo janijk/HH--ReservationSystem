@@ -9,7 +9,8 @@
 
 <body class="bg-dark text-white">
 	<div class="container">
-		<h1>Create new event</h1>
+		<h1>Create new event
+		</h1>
 	</div>
 	<div class="container">
 		<div style="width: 40%;">
@@ -35,7 +36,7 @@
 			  </div>	   
 			  <div class="form-group">
 			    <label for="input4" th:text="Duration"></label>
-			    <input  class="form-control" id="input4" th:field="*{duration}" placeholder="days">
+			    <input type="number" class="form-control" id="input4" th:field="*{duration}" >
 			    <span class="text-danger" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}">error</span>
 			  </div>
 			  
@@ -47,7 +48,7 @@
 			  
 			   <div class="form-group">
 			    <label for="input6" th:text="Capacity"></label>
-			    <input class="form-control" id="input6" th:field="*{capacity}" >
+			    <input type="number" class="form-control" id="input6" th:field="*{capacity}" >
 			    <span class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">error</span>
 			  </div>
 			  
@@ -58,7 +59,8 @@
 			  </div>
 			  
 			  <div style="clear: both; display: block; height: 10px;"></div>							  
-				<input  type="submit" value="Create" class="btn btn-success"></input>
+				<input  type="submit" value="Create" class="btn btn-outline-success"></input>
+				<a href="/events" class="btn btn-outline-danger" >Cancel</a>
 			</form>
 		
 		</div>
