@@ -26,6 +26,9 @@
 				<tr >
 					<td style="width: 550px;" th:text="${Res.event.name}" ></td>
 					<td>
+						<a th:href="@{/pdf/{id}/{idtwo}(id=${Res.event.eventId},idtwo=${Res.reservationId})}"  class="btn btn-outline-primary" >PDF</a>
+					</td>
+					<td>
 						<a th:href="@{/inspect/{id}(id=${Res.event.eventId})}"  class="btn btn-outline-primary" >Show</a>
 					</td>										
 					<td>										

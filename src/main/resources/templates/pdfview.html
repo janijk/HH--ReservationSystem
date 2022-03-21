@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title> PDF view </title>
+	<meta charset="UTF-8" />
+	<link type="text/css" rel="stylesheet"  th:href="@{css/bootstrap.min.css}" />	
+	
+</head>
+
+<body>	
+	<div  th:each = "Event : ${singleevent}" class="container">
+		<h1 style="font: 30;">[[${Event.name}]]</h1>
+	</div>
+	<div style="padding:5px 0"></div>
+	<div style="width: 500px;">
+		<div th:each = "Event : ${singleevent}" class="container">
+			<div th:each = "User : ${user}">
+				<div th:each = "Res : ${res}">		
+					<table class="table table-striped table-sm" >
+						<tr>
+							<th colspan="2" scope="row" th:text="Date"></th>
+							<td th:text="${Event.date}"></td>			
+						</tr>
+						<tr >
+							<th colspan="2" scope="row" th:text="Duration"></th>
+							<td th:text="${Event.duration}+' days'"></td>					
+						</tr>
+						<tr >
+							<th colspan="2" scope="row" th:text="Price"></th>
+							<td th:text="${Event.price}+' €'"></td>					
+						</tr>
+						<tr >
+							<th colspan="2" scope="row" th:text="Venue"></th>
+							<td th:text="${Event.venue.name}"></td>					
+						</tr>
+						<tr>
+							<th th:text="Buyer+':'" colspan="3" style="height:20px;"></th>
+						</tr>
+						<tr>
+							<th></th>
+							<th scope="row" th:text="Name"></th>
+							<td th:text="${User.firstName}+' '+${User.lastName}"></td>			
+						</tr>
+						<tr >
+							<th></th>
+							<th scope="row" th:text="Email"></th>
+							<td th:text="${User.email}"></td>					
+						</tr>
+						<tr>
+							<th th:text="Reservation+' '+information+':'" colspan="3" style="height:20px;"></th>
+						</tr>
+						<tr>
+							<th></th>
+							<th scope="row" th:text="Reservation+' '+number"></th>
+							<td th:text="${Res.reservationId}"></td>			
+						</tr>
+						<tr >
+							<th></th>
+							<th scope="row" th:text="Event+' '+number"></th>
+							<td th:text="${Res.event.eventId}"></td>					
+						</tr>
+						<tr >
+							<th></th>
+							<th scope="row" th:text="Account+' '+number"></th>
+							<td th:text="${Res.user.userId}"></td>					
+						</tr>
+							
+					</table>
+				</div>
+			</div>
+		</div>	
+	</div>	
+</body>
+
+</html>
