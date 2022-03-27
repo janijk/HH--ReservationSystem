@@ -30,13 +30,7 @@ public class ReservationSystemController {
 	private ReservationRepository rRepository;
 	@Autowired
 	private UserRepository uRepository;
-	
-	// Login page
-	@GetMapping("/login")
-	public String logIn() {
-		return "login";
-	}
-	
+		
 	// List events
 	@GetMapping(value="/events")
 	public String showEvents(Model model) {
@@ -72,6 +66,7 @@ public class ReservationSystemController {
 	@GetMapping("/editevent/{id}")
 	public String editEvent(@PathVariable("id")Long eventsId, Model model) {
 		model.addAttribute("event", eRepository.findById(eventsId));
+		model.addAttribute("venue", vRepository.findAll());
 		return "editevent";
 	}
 	

@@ -57,7 +57,7 @@ public class PDFController {
 		  	User user = uRep.findByUsername(princip.getName());
 		  	Reservation res = rRep.findById(reservationId).get();
 
-	        // Create HTML using Thymeleaf template Engine
+	        // HTML with Thymeleaf template Engine
 	        WebContext context = new WebContext(request, response, serCont);
 	        context.setVariable("singleevent", event);
 	        context.setVariable("user", user);
@@ -68,7 +68,8 @@ public class PDFController {
 	        ByteArrayOutputStream target = new ByteArrayOutputStream();
 	        ConverterProperties converterProperties = new ConverterProperties();
 	        converterProperties.setBaseUri("http://localhost:8080");
-	        // Call convert method
+	        
+	        // Convert method
 	        HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
 
 	        // extract output as bytes
