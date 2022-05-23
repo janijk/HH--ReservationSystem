@@ -10,5 +10,5 @@ Spring Security
 
 REST API
 
-JUnit testing
+JUnit 5
 
